@@ -15,7 +15,7 @@ public class MainActivity extends ActionBarActivity {
 
         RotatingCustomView rotatingCustomView = (RotatingCustomView)findViewById(R.id.rotatingView);
         for (int i = 0; i < 3; ++i) {
-            rotatingCustomView.addChild(new EmittingItemView(this));
+            rotatingCustomView.addChild(new EmittingItemView(this), i, 3);
         }
         rotatingCustomView.addCenterView(new EmittingItemView(this));
         rotatingCustomView.startRotation();
