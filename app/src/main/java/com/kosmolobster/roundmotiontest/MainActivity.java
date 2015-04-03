@@ -1,16 +1,9 @@
 package com.kosmolobster.roundmotiontest;
 
-import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
-import com.plattysoft.leonids.ParticleSystem;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -19,6 +12,13 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        RotatingCustomView rotatingCustomView = (RotatingCustomView)findViewById(R.id.rotatingView);
+        for (int i = 0; i < 3; ++i) {
+            rotatingCustomView.addChild(new EmittingItemView(this));
+        }
+        rotatingCustomView.addCenterView(new EmittingItemView(this));
+        rotatingCustomView.startRotation();
     }
 
 

@@ -10,11 +10,10 @@
         <!--android:background="@android:color/holo_orange_light"-->
         <!--android:layout_centerInParent="true"/>-->
 
-    <com.kosmolobster.roundmotiontest.EmittingItemView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true">
 
-    </com.kosmolobster.roundmotiontest.EmittingItemView>
+    <com.kosmolobster.roundmotiontest.RotatingCustomView
+        android:id="@+id/rotatingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

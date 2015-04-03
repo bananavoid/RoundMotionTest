@@ -9,6 +9,8 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -40,43 +42,56 @@ public class EmittingItemView extends RelativeLayout {
         params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
 
         this.setLayoutParams(params);
-
         this.setClipChildren(true);
+        this.setAlpha(0.6f);
 
-        ImageView emittingAnimation = new ImageView(getContext());
         ImageView centralImage = new ImageView(getContext());
 
         AnimationDrawable animationDrawable = (AnimationDrawable)
                 getResources().getDrawable(R.drawable.anim_emit);
 
-        //emittingAnimation.setBackground(animationDrawable);
         centralImage.setBackground(getResources().getDrawable(R.drawable.bg0));
 
-        RelativeLayout.LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT);
+        int thisHeight;
+        int thisWidth;
+
+        if (attrs != null ) {
+            thisHeight  = getAndroidAttrValue(attrs, "layout_height");
+            thisWidth = getAndroidAttrValue(attrs, "layout_width");
+        } else {
+            thisHeight = 100;
+            thisWidth = 100;
+        }
+
+
+        RelativeLayout.LayoutParams layoutParams = new LayoutParams(thisHeight/3, thisWidth/3);
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
 
-        emittingAnimation.setLayoutParams(layoutParams);
         centralImage.setLayoutParams(layoutParams);
 
-        centralImage.getLayoutParams().height = this.getLayoutParams().height - 40;
-        centralImage.getLayoutParams().width = this.getLayoutParams().width - 40;
-
-        centralImage.setAlpha(0.8f);
-
-        emittingAnimation.setAlpha(0.7f);
         animationDrawable.setExitFadeDuration(400);
+        animationDrawable.setEnterFadeDuration(400);
 
         this.setBackground(animationDrawable);
 
         this.addView(centralImage);
 
         animationDrawable.start();
-        animationDrawable.start();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+    }
+
+    public float dipToPixels(Context context, float dipValue) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
+    }
+
+    public int getAndroidAttrValue(AttributeSet attrs, String needed) {
+        String height = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", needed);
+        String newStr = height.replaceAll("[^\\d.]", "");
+        return (int)dipToPixels(getContext(), Float.parseFloat(newStr));
     }
 }
