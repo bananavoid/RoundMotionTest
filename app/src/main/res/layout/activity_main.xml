@@ -3,25 +3,11 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_dark">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-
-        <ImageView
-            android:src="@drawable/anim_emit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"/>
-
-        <com.kosmolobster.roundmotiontest.EmittingItemView
-            android:id="@+id/center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
-
-    </RelativeLayout>
-
+    <ImageView
+        android:src="@drawable/anim_emit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"/>
 
     <com.kosmolobster.roundmotiontest.RotatingCustomView
         android:id="@+id/rotatingView"

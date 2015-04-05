@@ -1,15 +1,10 @@
 package com.kosmolobster.roundmotiontest;
 
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -20,6 +15,7 @@ public class MainActivity extends ActionBarActivity {
     EmittingItemView[] rotatingItems = new EmittingItemView[ROTATING_CHILDS_COUNT];
     Handler hand = new Handler();
 
+    //runnable for delay between rotating views animations
     final Runnable runnable = new Runnable() {
         public void run() {
             if(itCount <=  ROTATING_CHILDS_COUNT - 1) {
@@ -49,10 +45,10 @@ public class MainActivity extends ActionBarActivity {
 
         hand.postDelayed(runnable, UPDATE_ANIMATIONS_INTERVAL);
 
-        EmittingItemView center = (EmittingItemView)findViewById(R.id.center);
+        EmittingItemView center = new EmittingItemView(this);
         center.setCentralImage(R.drawable.bg0, 80);
         center.setText("Hey, you");
-        //rotatingCustomView.addCenterView(center);
+        rotatingCustomView.addCenterView(center);
         rotatingCustomView.startRotation();
     }
 
