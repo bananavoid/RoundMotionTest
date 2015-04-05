@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list   android:id="@+id/coin_animation"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/fr0" android:duration="100" />
+    <item android:drawable="@drawable/fr0" android:duration="1000" />
     <item android:drawable="@drawable/fr1" android:duration="100" />
     <item android:drawable="@drawable/fr2" android:duration="100" />
     <item android:drawable="@drawable/fr3" android:duration="100" />

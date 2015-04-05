@@ -1,12 +1,34 @@
 package com.kosmolobster.roundmotiontest;
 
+import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class MainActivity extends ActionBarActivity {
+    private int ROTATING_CHILDS_COUNT = 3;
+    private int UPDATE_ANIMATIONS_INTERVAL = 600;
+    int itCount = 0;
+
+    EmittingItemView[] rotatingItems = new EmittingItemView[ROTATING_CHILDS_COUNT];
+    Handler hand = new Handler();
+
+    final Runnable runnable = new Runnable() {
+        public void run() {
+            if(itCount <=  ROTATING_CHILDS_COUNT - 1) {
+                rotatingItems[itCount].startDrawableAnimation();
+                hand.postDelayed(runnable, UPDATE_ANIMATIONS_INTERVAL);
+                ++itCount;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,13 +36,30 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         RotatingCustomView rotatingCustomView = (RotatingCustomView)findViewById(R.id.rotatingView);
-        for (int i = 0; i < 3; ++i) {
-            rotatingCustomView.addChild(new EmittingItemView(this), i, 3);
+        for (int i = 0; i < ROTATING_CHILDS_COUNT; ++i) {
+            final EmittingItemView view = new EmittingItemView(this);
+
+            view.setAnimation(R.drawable.anim_emit, 150);
+            view.setCentralImage(R.drawable.bg0, 80);
+
+            view.setText("View #" + String.valueOf(i));
+            rotatingItems[i] = view;
+            rotatingCustomView.addChild(view, i, ROTATING_CHILDS_COUNT);
         }
-        rotatingCustomView.addCenterView(new EmittingItemView(this));
+
+        hand.postDelayed(runnable, UPDATE_ANIMATIONS_INTERVAL);
+
+        EmittingItemView center = (EmittingItemView)findViewById(R.id.center);
+        center.setCentralImage(R.drawable.bg0, 80);
+        center.setText("Hey, you");
+        //rotatingCustomView.addCenterView(center);
         rotatingCustomView.startRotation();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
