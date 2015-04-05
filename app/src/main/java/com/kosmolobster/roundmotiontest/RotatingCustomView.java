@@ -17,6 +17,8 @@ import java.util.ArrayList;
 public class RotatingCustomView extends FrameLayout {
     public View centerView;
     private int CHILDREN_COUNT = 0;
+    private int ROTATION_RADIUS = 300;
+    private int ROTATION_ANIMATION_DURATION = 5000;
     private ArrayList<View> children;
 
     public RotatingCustomView(Context context) {
@@ -81,7 +83,7 @@ public class RotatingCustomView extends FrameLayout {
             final float angleRad = (float)(angleDeg * Math.PI / 180.0f);
 
             ValueAnimator animator = ValueAnimator.ofFloat(-1, 1);
-            animator.setDuration(5000);
+            animator.setDuration(ROTATION_ANIMATION_DURATION);
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
             {
                 @Override
@@ -89,8 +91,8 @@ public class RotatingCustomView extends FrameLayout {
                     float value = ((Float) (animation.getAnimatedValue()))
                             .floatValue();
 
-                    children.get(next).setTranslationX((float)(300.0 * Math.sin(value*Math.PI + angleRad)));
-                    children.get(next).setTranslationY((float)(300.0 * Math.cos(value*Math.PI + angleRad)));
+                    children.get(next).setTranslationX((float)(ROTATION_RADIUS * Math.sin(value*Math.PI + angleRad)));
+                    children.get(next).setTranslationY((float)(ROTATION_RADIUS * Math.cos(value*Math.PI + angleRad)));
                 }
             });
             animator.setRepeatCount(Animation.INFINITE);
