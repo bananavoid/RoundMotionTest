@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.LinearInterpolator;
 
 import com.plattysoft.leonids.ParticleSystem;
 
@@ -17,7 +16,7 @@ public class MainActivity extends ActionBarActivity implements
 
     RoundMotionFragment rmFragment;
     ParticleSystem ps;
-
+    ParticleSystem customPs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,16 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     private void setBubbles() {
-        ps = new ParticleSystem(this, 700, R.drawable.circle, 4000, R.id.bgLayout);
+        ps = new ParticleSystem(this, 800, R.drawable.circle, 8000);
         ps.setScaleRange(0.5f, 2f);
-        ps.setSpeedByComponentsRange(-0.01f, 0.01f, -0.01f, -1f);
-        ps.setFadeOut(1000, new LinearInterpolator());
+        ps.setSpeedByComponentsRange(-0.01f, 0.01f, -0.1f, -1.8f);
+        //ps.setFadeOut(1000, new LinearInterpolator());
+    }
+
+    private void runCustomBubbleAnim(int drawableId, int count) {
+        customPs = new ParticleSystem(this, count, drawableId, 8000);
+        customPs.setSpeedByComponentsRange(-0.07f, 0.07f, -0.1f, -1.0f);
+        customPs.emit(findViewById(R.id.emiter_bottom), 2, 8000);
     }
 
     @Override
@@ -72,12 +77,11 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     public void onFragmentInteraction() {
+        ps.emitWithGravity(findViewById(R.id.emiter_bottom), Gravity.TOP, 700);
+        runCustomBubbleAnim(R.drawable.circle_green, 4);
+        runCustomBubbleAnim(R.drawable.circle_orange, 3);
 
-
-        ps.emitWithGravity(findViewById(R.id.emiter_bottom), Gravity.TOP, 1000);
         rmFragment.startSlideAnimation();
-
-
     }
 
     @Override
