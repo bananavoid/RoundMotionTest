@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.plattysoft.leonids.ParticleSystem;
 
@@ -82,14 +83,19 @@ public class MainActivity extends ActionBarActivity implements
         runCustomBubbleAnim(R.drawable.circle_orange, 3);
 
         rmFragment.startSlideAnimation();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations( R.anim.fade_out, 0, 0, R.anim.fade_out)
+                .replace(R.id.fragmentLayout, new CounterFragment()).commit();
     }
 
     @Override
     public void onEndAnimation() {
-        getSupportFragmentManager()
-            .beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .replace(R.id.fragmentLayout, new CounterFragment()).commit();
+//        getSupportFragmentManager()
+//            .beginTransaction()
+//            .setCustomAnimations( R.anim.abc_fade_out, 0, 0, R.anim.abc_fade_in)
+//            .replace(R.id.fragmentLayout, new CounterFragment()).commit();
     }
 
     @Override

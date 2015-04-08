@@ -12,23 +12,29 @@
         android:gravity="center">
 
         <TextView
-            android:text="@string/fun_scope"
+            android:text="@string/fun_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="60dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:text="@string/points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 

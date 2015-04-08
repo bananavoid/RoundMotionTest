@@ -3,7 +3,6 @@ package com.kosmolobster.roundmotiontest;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,7 +31,7 @@ public class CounterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_bubbled, container, false);
+        View view = inflater.inflate(R.layout.fragment_counter, container, false);
         final TextView counterView = (TextView)view.findViewById(R.id.counter);
 
         ValueAnimator animator = new ValueAnimator();
