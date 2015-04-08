@@ -1,60 +1,51 @@
 package com.kosmolobster.roundmotiontest;
 
-import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.LinearInterpolator;
+
+import com.plattysoft.leonids.ParticleSystem;
 
 
-public class MainActivity extends ActionBarActivity {
-    private int ROTATING_CHILDS_COUNT = 3;
-    private int UPDATE_ANIMATIONS_INTERVAL = 600;
-    int itCount = 0;
+public class MainActivity extends ActionBarActivity implements
+        RoundMotionFragment.OnFragmentInteractionListener,
+        CounterFragment.OnFragmentAnimationListener {
 
-    EmittingItemView[] rotatingItems = new EmittingItemView[ROTATING_CHILDS_COUNT];
-    Handler hand = new Handler();
+    RoundMotionFragment rmFragment;
+    ParticleSystem ps;
 
-    //runnable for delay between rotating views animations
-    final Runnable runnable = new Runnable() {
-        public void run() {
-            if(itCount <=  ROTATING_CHILDS_COUNT - 1) {
-                rotatingItems[itCount].startDrawableAnimation();
-                hand.postDelayed(runnable, UPDATE_ANIMATIONS_INTERVAL);
-                ++itCount;
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RotatingCustomView rotatingCustomView = (RotatingCustomView)findViewById(R.id.rotatingView);
-        for (int i = 0; i < ROTATING_CHILDS_COUNT; ++i) {
-            final EmittingItemView view = new EmittingItemView(this);
-
-            view.setAnimation(R.drawable.anim_emit, 150);
-            view.setCentralImage(R.drawable.bg0, 80);
-
-            view.setText("View #" + String.valueOf(i));
-            rotatingItems[i] = view;
-            rotatingCustomView.addChild(view, i, ROTATING_CHILDS_COUNT);
+        if (savedInstanceState == null) {
+            rmFragment = new RoundMotionFragment();
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.add(R.id.fragmentLayout, rmFragment).commit();
         }
+    }
 
-        hand.postDelayed(runnable, UPDATE_ANIMATIONS_INTERVAL);
-
-        EmittingItemView center = new EmittingItemView(this);
-        center.setCentralImage(R.drawable.bg0, 80);
-        center.setText("Hey, you");
-        rotatingCustomView.addCenterView(center);
-        rotatingCustomView.startRotation();
+    private void setBubbles() {
+        ps = new ParticleSystem(this, 700, R.drawable.circle, 4000, R.id.bgLayout);
+        ps.setScaleRange(0.5f, 2f);
+        ps.setSpeedByComponentsRange(-0.01f, 0.01f, -0.01f, -1f);
+        ps.setFadeOut(1000, new LinearInterpolator());
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if( ps == null) {
+            setBubbles();
+        }
     }
 
     @Override
@@ -80,7 +71,25 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
+    public void onFragmentInteraction() {
+
+
+        ps.emitWithGravity(findViewById(R.id.emiter_bottom), Gravity.TOP, 1000);
+        rmFragment.startSlideAnimation();
+
+
+    }
+
+    @Override
+    public void onEndAnimation() {
+        getSupportFragmentManager()
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .replace(R.id.fragmentLayout, new CounterFragment()).commit();
+    }
+
+    @Override
+    public void onStopNumbersInteraction() {
+        ps.stopEmitting();
     }
 }

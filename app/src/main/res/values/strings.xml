@@ -3,4 +3,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_bubbled">BubbledActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fun_scope">YOUR CURRENT FUN SCOPE</string>
+    <string name="points">POINTS</string>
 </resources>

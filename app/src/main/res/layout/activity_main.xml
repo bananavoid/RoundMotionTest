@@ -3,14 +3,19 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_dark">
 
-    <ImageView
-        android:src="@drawable/anim_emit"
+    <View android:id="@+id/emiter_bottom"
+        android:layout_marginBottom="-10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"/>
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true" />
 
-    <com.kosmolobster.roundmotiontest.RotatingCustomView
-        android:id="@+id/rotatingView"
+    <FrameLayout
+        android:id="@+id/bgLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <FrameLayout
+        android:id="@+id/fragmentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
