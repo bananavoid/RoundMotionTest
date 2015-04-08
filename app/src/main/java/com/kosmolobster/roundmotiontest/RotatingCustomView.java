@@ -18,7 +18,7 @@ public class RotatingCustomView extends FrameLayout {
     public View centerView;
     private int CHILDREN_COUNT = 0;
     private int ROTATION_RADIUS = 300;
-    private int ROTATION_ANIMATION_DURATION = 5000;
+    private int ROTATION_ANIMATION_DURATION = 10000;
     private ArrayList<View> children;
 
     public RotatingCustomView(Context context) {
@@ -82,7 +82,7 @@ public class RotatingCustomView extends FrameLayout {
             float angleDeg = i * 360.0f / CHILDREN_COUNT - 90.0f;
             final float angleRad = (float)(angleDeg * Math.PI / 180.0f);
 
-            ValueAnimator animator = ValueAnimator.ofFloat(-1, 1);
+            ValueAnimator animator = ValueAnimator.ofFloat(1, -1);
             animator.setDuration(ROTATION_ANIMATION_DURATION);
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
             {
