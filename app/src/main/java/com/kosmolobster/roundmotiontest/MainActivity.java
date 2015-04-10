@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.plattysoft.leonids.ParticleSystem;
 
@@ -16,6 +15,7 @@ public class MainActivity extends ActionBarActivity implements
         CounterFragment.OnFragmentAnimationListener {
 
     RoundMotionFragment rmFragment;
+    CounterFragment counterFragment;
     ParticleSystem ps;
     ParticleSystem customPs;
 
@@ -33,16 +33,15 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     private void setBubbles() {
-        ps = new ParticleSystem(this, 800, R.drawable.circle, 8000);
+        ps = new ParticleSystem(this, 800, R.drawable.circle, 3000);
         ps.setScaleRange(0.5f, 2f);
-        ps.setSpeedByComponentsRange(-0.01f, 0.01f, -0.1f, -1.8f);
-        //ps.setFadeOut(1000, new LinearInterpolator());
+        ps.setSpeedByComponentsRange(-0.01f, 0.01f, -0.1f, -1.2f);
     }
 
     private void runCustomBubbleAnim(int drawableId, int count) {
-        customPs = new ParticleSystem(this, count, drawableId, 8000);
-        customPs.setSpeedByComponentsRange(-0.07f, 0.07f, -0.1f, -1.0f);
-        customPs.emit(findViewById(R.id.emiter_bottom), 2, 8000);
+        customPs = new ParticleSystem(this, count, drawableId, 3000);
+        customPs.setSpeedByComponentsRange(-0.3f, 0.3f, -0.1f, -1.2f);
+        customPs.emit(findViewById(R.id.emiter_bottom), count, 3000);
     }
 
     @Override
@@ -78,28 +77,25 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     public void onFragmentInteraction() {
-        ps.emitWithGravity(findViewById(R.id.emiter_bottom), Gravity.TOP, 700);
-        runCustomBubbleAnim(R.drawable.circle_green, 4);
-        runCustomBubbleAnim(R.drawable.circle_orange, 3);
+        ps.emitWithGravity(findViewById(R.id.emiter_bottom), Gravity.TOP, 300);
+        runCustomBubbleAnim(R.drawable.circle_green, 10);
+        runCustomBubbleAnim(R.drawable.circle_orange, 8);
+        runCustomBubbleAnim(R.drawable.circle_blue, 6);
 
         rmFragment.startSlideAnimation();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations( R.anim.fade_out, 0, 0, R.anim.fade_out)
-                .replace(R.id.fragmentLayout, new CounterFragment()).commit();
     }
 
     @Override
     public void onEndAnimation() {
-//        getSupportFragmentManager()
-//            .beginTransaction()
-//            .setCustomAnimations( R.anim.abc_fade_out, 0, 0, R.anim.abc_fade_in)
-//            .replace(R.id.fragmentLayout, new CounterFragment()).commit();
+        counterFragment = new CounterFragment();
+        getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.fragmentLayout, counterFragment).commit();
+
+        ps.stopEmitting();
     }
 
     @Override
     public void onStopNumbersInteraction() {
-        ps.stopEmitting();
     }
 }

@@ -104,9 +104,7 @@ public class RoundMotionFragment extends Fragment {
     }
 
     public void startSlideAnimation(){
-        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_out_top);
-        animation.setFillEnabled(true);
-        animation.setFillAfter(true);
+        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_top);
 
         mainView.startAnimation(animation);
 
