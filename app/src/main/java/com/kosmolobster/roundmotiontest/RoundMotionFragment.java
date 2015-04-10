@@ -20,6 +20,11 @@ public class RoundMotionFragment extends Fragment {
     private int itCount = 0;
     public View mainView;
     public Button nextBtn;
+    private int[] userImagesIds = new int[] {
+            R.drawable.user0,
+            R.drawable.user1,
+            R.drawable.user3
+    };
 
     EmittingItemView[] rotatingItems = new EmittingItemView[ROTATING_CHILDS_COUNT];
     Handler hand = new Handler();
@@ -67,7 +72,7 @@ public class RoundMotionFragment extends Fragment {
             final EmittingItemView emittingItemView = new EmittingItemView(getActivity());
 
             emittingItemView.setAnimation(R.drawable.anim_emit, 150);
-            emittingItemView.setCentralImage(R.drawable.bg0, 80);
+            emittingItemView.setCentralImage(userImagesIds[i], 80);
 
             emittingItemView.setText("View #" + String.valueOf(i));
             rotatingItems[i] = emittingItemView;
@@ -77,7 +82,7 @@ public class RoundMotionFragment extends Fragment {
         hand.postDelayed(runnable, UPDATE_ANIMATIONS_INTERVAL);
 
         EmittingItemView center = new EmittingItemView(getActivity());
-        center.setCentralImage(R.drawable.bg0, 80);
+        center.setCentralImage(R.drawable.user2, 80);
         center.setText("Hey, you");
         rotatingCustomView.addCenterView(center);
         rotatingCustomView.startRotation();
